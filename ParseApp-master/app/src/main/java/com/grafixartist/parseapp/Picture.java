@@ -46,8 +46,6 @@ public class Picture extends AppCompatActivity {
     }
 
     private void addPhoto(int i) {
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
         ArrayList<String> locations = null;
         try {
             locations = (ArrayList<String>) InternalStorage.readObject(this, "location");
@@ -62,6 +60,7 @@ public class Picture extends AppCompatActivity {
         if(imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             imageView.setImageBitmap(getResizedBitmap(myBitmap, 1000, 1400));
+            imageView.setRotation(90);
             layout.addView(imageView);
         }
         if(!imgFile.exists()) {

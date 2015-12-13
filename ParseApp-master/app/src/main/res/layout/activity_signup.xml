@@ -42,7 +42,7 @@
                 android:textAlignment="center">
 
                 <EditText
-                    android:id="@+id/username"
+                    android:id="@+id/username_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
@@ -60,7 +60,7 @@
                 android:textAlignment="center">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/password_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
@@ -72,7 +72,7 @@
                 android:textAlignment="center" />
             </com.wrapp.floatlabelededittext.FloatLabeledEditText>
             <Button
-
+                android:id="@+id/btn_signup"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -99,7 +99,6 @@
                     android:layout_height="40dp"
                     android:id="@+id/fb_user_picture"
                     android:background="@drawable/facebookhead" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"

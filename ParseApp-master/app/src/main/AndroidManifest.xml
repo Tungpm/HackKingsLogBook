@@ -41,8 +41,16 @@ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
             android:label="Picture" >
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+        android:name=".MainActivity"
+        android:label="MainActivity" >
+    </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:label="SignupActivity" >
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
