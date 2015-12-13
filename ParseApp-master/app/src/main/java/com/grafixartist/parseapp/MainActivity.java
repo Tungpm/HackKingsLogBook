@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         btnMain.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                popupWindow.dismiss();
             }
         });
         //Creates onClickListener that closes the description menu
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 send(btnConnect.getText()+"",btnDismiss.getText()+"");
-                finish();
+                popupWindow.dismiss();
             }
         });
         popupWindow.showAsDropDown(findViewById(R.id.history), 50, -30);
@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         journey.setCheckpoints(new JSONArray(dict.values()));
-        journey.setUser(ParseUser.getCurrentUser());
         journey.setACL(acl);
         journey.saveInBackground();
     }
@@ -176,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         String title = journey.getTitle();
         String desc = journey.getDescription();
 
-        
+
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int bitmapWidth,
