@@ -7,8 +7,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AbsoluteLayout;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import java.io.File;
@@ -29,8 +36,51 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Create the Settings button on click listener
     public void share(View view) {
+        LayoutInflater layoutInflater
+                = (LayoutInflater) getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.description, null);
+        final PopupWindow popupWindow = new PopupWindow(
+                popupView,
+                AbsoluteLayout.LayoutParams.WRAP_CONTENT,
+                AbsoluteLayout.LayoutParams.WRAP_CONTENT);
+        //Creates 4 buttons objects linked to the buttons on the description menu
+        final Button btnDismiss = (Button) popupView.findViewById(R.id.connect);
+        Button btnMain = (Button) popupView.findViewById(R.id.host);
+        final EditText btnConnect = (EditText) popupView.findViewById(R.id.dismiss);
+        EditText btnHost = (EditText) popupView.findViewById(R.id.main);
+        //Hides the Connect and Host button so the can't be pressed
+        popupWindow.setFocusable(true);
+        popupWindow.update();
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        //Creates onClickListener that closes the aiGame and returns to the main menu
+        btnMain.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //Creates onClickListener that closes the description menu
+        btnDismiss.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send(btnConnect.getText()+"",btnDismiss.getText()+"");
+            }
+        });
 
+        popupWindow.showAsDropDown(findViewById(R.id.photo), 50, -30);
+    }
+
+
+    public void send(String title, String description) {
+
+    }
+    public void friends(View view) {
+        Intent intent = new Intent(this, FriendsActivity.class);
+        startActivity(intent);
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int bitmapWidth,
