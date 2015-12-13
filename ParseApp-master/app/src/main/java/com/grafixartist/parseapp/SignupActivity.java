@@ -170,8 +170,11 @@ public class SignupActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             // Fetching data from URI and storing in bitmap
-            bitmap = DownloadImageBitmap(profile.getProfilePictureUri(200, 200).toString());
+            try {
+                bitmap = DownloadImageBitmap(profile.getProfilePictureUri(200, 200).toString());
+            } catch (Exception e) {
 
+            }
             return null;
         }
 

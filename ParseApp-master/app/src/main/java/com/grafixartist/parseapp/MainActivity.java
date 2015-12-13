@@ -2,6 +2,7 @@ package com.grafixartist.parseapp;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,6 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.grafixartist.parseapp.ParseObjects.Checkpoint;
+import com.grafixartist.parseapp.ParseObjects.Journey;
+import com.grafixartist.parseapp.ParseObjects.Photo;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +34,26 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //TODO: check
     public void share(View view) {
+        Journey journey = new Journey();
+        ArrayList<String> locations;
+        try {
+            locations = (ArrayList<String>) InternalStorage.readObject(this, "location");
+        } catch (Exception e) {
+            locations = new ArrayList<>();
+        }
+        for (int i = 0; i < locations.size(); i++) {
+            File imgFile;
+            try {
+                imgFile = new File("/storage/emulated/0/Log/" + locations.get(i));
+            }catch(Exception e){
+                imgFile = null;
+            }
+            Checkpoint checkpoint = new Checkpoint();
 
+            Photo photo = new Photo("", "", imgFile, checkpoint);
+        }
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int bitmapWidth,
