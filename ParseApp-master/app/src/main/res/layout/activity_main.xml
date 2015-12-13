@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="inforgraphic.log.MainActivity"
+    android:background="@drawable/background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/space2"
+        android:layout_above="@+id/logo"
+        android:layout_alignLeft="@+id/space1"
+        android:layout_alignStart="@+id/space1" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:background="@drawable/log2"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/logo"
+        android:layout_above="@+id/space1"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/space1"
+        android:layout_above="@+id/photo"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.03"
+        android:gravity="center"
+        android:background="@color/orange"
+        android:text="TAKE A PHOTO OF THIS PLACE"
+        android:id="@+id/photo"
+        android:onClick="camera"
+        android:layout_above="@+id/pin"
+        android:layout_alignLeft="@+id/pin"
+        android:layout_alignStart="@+id/pin"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.03"
+        android:text="PIN LOCATION"
+        android:onClick="pin"
+        android:id="@+id/pin"
+        android:background="@color/blue1"
+        android:layout_above="@+id/map"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.03"
+        android:text="VIEW CURRENT MAP"
+        android:id="@+id/map"
+        android:gravity="center"
+        android:onClick="map"
+        android:background="@color/blue2"
+        android:layout_above="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.03"
+        android:text="SHARE TO YOUR FRIENDS"
+        android:gravity="center"
+        android:onClick="share"
+        android:layout_above="@+id/clear"
+        android:background="@color/blue3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.03"
+        android:text="CLEAR DATA"
+        android:id="@+id/clear"
+        android:onClick="clear"
+        android:background="@color/blue4"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</LinearLayout>
