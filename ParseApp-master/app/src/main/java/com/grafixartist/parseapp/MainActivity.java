@@ -21,12 +21,25 @@ import android.widget.Toast;
 import com.grafixartist.parseapp.ParseObjects.Checkpoint;
 import com.grafixartist.parseapp.ParseObjects.Journey;
 import com.grafixartist.parseapp.ParseObjects.Photo;
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -72,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 send(btnConnect.getText()+"",btnDismiss.getText()+"");
+                finish();
             }
         });
         popupWindow.showAsDropDown(findViewById(R.id.history), 50, -30);
@@ -80,27 +94,89 @@ public class MainActivity extends AppCompatActivity {
 
     public void send(String title, String description) {
 
+        ParseACL acl = new ParseACL();
+
+        // Give public read access
+        acl.setPublicReadAccess(true);
+
         Journey journey = new Journey();
+        journey.setTitle(title);
+        journey.setDescription(description);
+        journey.setUser(ParseUser.getCurrentUser());
+
+        List<Checkpoint> checkpoints = new ArrayList<Checkpoint>();
+
         ArrayList<String> locations;
+        ArrayList<Double> pins;
         try {
             locations = (ArrayList<String>) InternalStorage.readObject(this, "location");
+            pins = (ArrayList<Double>) InternalStorage.readObject(this, "array");
         } catch (Exception e) {
             locations = new ArrayList<>();
+            pins = new ArrayList<>();
         }
-        for (int i = 0; i < locations.size(); i++) {
-            File imgFile;
-            try {
-                imgFile = new File("/storage/emulated/0/Log/" + locations.get(i));
-            } catch (Exception e) {
-                imgFile = null;
+
+        HashMap<Double, Checkpoint> dict = new HashMap<Double, Checkpoint>();
+        for (int i= 0; i<pins.size(); i+= 3) {
+            Checkpoint checkpoint;
+            if (dict.containsKey(pins.get(i + 1) + pins.get(i + 2)) &&
+                    (dict.get(pins.get(i + 1) + pins.get(i + 2)).getLocation().getLatitude() == pins.get(i + 1))) {
+                checkpoint = dict.get(pins.get(i + 1) + pins.get(i + 2));
+            } else {
+                checkpoint = new Checkpoint();
+                checkpoint.setTitle((i / 3) + "");
+                checkpoint.setDescription(locations.get(i/3));
+                checkpoint.setLocation(new ParseGeoPoint(pins.get(i + 1), pins.get(i + 2)));
+                dict.put(pins.get(i + 1) + pins.get(i + 2), checkpoint);
             }
-            Checkpoint checkpoint = new Checkpoint();
 
-            Photo photo = new Photo(title, description, imgFile, checkpoint);
+            if (pins.get(i) != 0.0) {
+                File imgFile;
+                try {
+                    imgFile = new File("/storage/emulated/0/Log/" + locations.get(i / 3));
+
+                } catch (Exception e) {
+                    imgFile = null;
+                }
+                Photo photo = new Photo();
+                List<Photo> l = new ArrayList<Photo>();
+                try {
+                    Method method = Parse.class.getDeclaredMethod("convertArrayToList", JSONArray.class);
+                    method.setAccessible(true);
+                    JSONArray jsonArray = checkpoint.getPhotos();
+                    l = (List<Photo>) method.invoke(null, jsonArray);
+                } catch (Exception e){
+
+                }
+
+
+                l.add(photo);
+                checkpoint.setPhotos(new JSONArray(l));
+
+                photo.setACL(acl);
+
+                photo.saveInBackground();
+            }
         }
-    }
-    public void history(View view) {
 
+
+        for (Checkpoint checkpoint : dict.values()) {
+            checkpoint.setACL(acl);
+            checkpoint.saveInBackground();
+        }
+
+        journey.setCheckpoints(new JSONArray(dict.values()));
+        journey.setUser(ParseUser.getCurrentUser());
+        journey.setACL(acl);
+        journey.saveInBackground();
+    }
+
+    public void history(View view) {
+        Journey journey = new Journey();
+        String title = journey.getTitle();
+        String desc = journey.getDescription();
+
+        
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int bitmapWidth,
