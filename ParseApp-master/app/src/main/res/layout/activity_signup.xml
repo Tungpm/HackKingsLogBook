@@ -70,6 +70,26 @@
                     android:enabled="true"
                     android:padding="2dp" />
                 android:textAlignment="center" />
+
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+            android:textAlignment="center">
+
+            <EditText
+                android:id="@+id/password_signup_again"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Retype Password"
+                android:inputType="textPassword"
+                android:background="#78ffffff"
+                android:editable="true"
+                android:enabled="true"
+                android:padding="2dp" />
+            android:textAlignment="center" />
             </com.wrapp.floatlabelededittext.FloatLabeledEditText>
             <Button
                 android:id="@+id/btn_signup"
